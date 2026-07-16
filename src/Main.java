@@ -20,7 +20,7 @@ public class Main {
 			System.out.println("\n===== MENU =====");
 			System.out.println("--- Produtos ---");
 			System.out.println("1 - Cadastrar produto");
-			System.out.println("--- Clientes ---");
+			System.out.println("--- CRUD de clientes ---");
 			System.out.println("2 - Cadastrar cliente");
 			System.out.println("3 - Consultar cliente por id");
 			System.out.println("4 - Listar clientes");
