@@ -20,22 +20,25 @@ public class Main {
 			sc.nextLine(); // LIMPAR
 
 			switch (opcao) {
-				case 1:
-					System.out.print("Descrição do produto: ");
-					String descricao = sc.nextLine();
-					System.out.print("Preço: ");
-					double preco = sc.nextDouble();
-					sc.nextLine();
+			case 1:
+			    System.out.print("Descrição do produto: ");
+			    String descricao = sc.nextLine();
+			    System.out.print("Preço: ");
+			    double preco = sc.nextDouble();
+			    sc.nextLine();
+			    System.out.print("Quantidade em estoque: ");
+			    int estoque = sc.nextInt();
+			    sc.nextLine();
 
-					Produto novoProduto = new Produto(descricao, preco);
-					Produto salvo = dao.salvar(novoProduto);
+			    Produto novoProduto = new Produto(descricao, preco, estoque);
+			    Produto salvo = dao.salvar(novoProduto);
 
-					if (salvo != null) {
-						System.out.println("Produto cadastrado com sucesso!");
-					} else {
-						System.out.println("Erro ao cadastrar produto.");
-					}
-					break;
+			    if (salvo != null) {
+			        System.out.println("Produto cadastrado com sucesso!");
+			    } else {
+			        System.out.println("Erro ao cadastrar produto.");
+			    }
+			    break;
 
 				case 0:
 					System.out.println("Saindo...");
