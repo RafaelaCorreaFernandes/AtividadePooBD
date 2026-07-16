@@ -63,22 +63,41 @@ public class ProdutoDao implements ICRUD {
 	}
  
 	@Override
- public List<Produto> consultar() {
-		
-		List<Produto> produtos = new ArrayList<Produto>();
-		Connection con = ConectaDB.conectar();
-		try {
-			PreparedStatement stm = con.prepareStatement("select * from tb_produtos");
-			ResultSet rs = stm.executeQuery();
-			while(rs.next()) {
-				Produto p = new Produto(rs.getInt(1),rs.getString(2),rs.getDouble(3));
-				produtos.add(p);
-			}
-			
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}
-	return produtos;
+	public Produto consultar(int id) {
+	    Produto p = null;
+	    Connection con = ConectaDB.conectar();
+	    try {
+	        PreparedStatement stm = con.prepareStatement("select * from tb_produtos where id = ?");
+	        stm.setInt(1, id);
+	        ResultSet rs = stm.executeQuery();
+	        if (rs.next()) {
+	            p = new Produto(rs.getInt(1), rs.getString(2), rs.getDouble(3));
+	        }
+	        stm.close();
+	        con.close();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return p;
+	}
+
+	@Override
+	public List<Produto> consultar() {
+	    List<Produto> produtos = new ArrayList<Produto>();
+	    Connection con = ConectaDB.conectar();
+	    try {
+	        PreparedStatement stm = con.prepareStatement("select * from tb_produtos");
+	        ResultSet rs = stm.executeQuery();
+	        while (rs.next()) {
+	            Produto p = new Produto(rs.getInt(1), rs.getString(2), rs.getDouble(3));
+	            produtos.add(p);
+	        }
+	        stm.close();
+	        con.close();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return produtos;
 	}
 }
  
