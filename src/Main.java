@@ -1,5 +1,3 @@
-
-
 import java.util.List;
 import java.util.Scanner;
 
@@ -7,6 +5,8 @@ import dao.ClienteDao;
 import dao.ProdutoDao;
 import modelos.Cliente;
 import modelos.Produto;
+import dao.PedidoDao;
+import modelos.Pedido;
 
 public class Main {
 
@@ -26,6 +26,8 @@ public class Main {
 			System.out.println("4 - Listar clientes");
 			System.out.println("5 - Alterar cliente");
 			System.out.println("6 - Deletar cliente");
+			System.out.println("--- Pedidos ---");
+			System.out.println("7 - Cadastrar pedido");
 			System.out.println("0 - Sair");
 			System.out.print("Escolha uma opção: ");
 			opcao = sc.nextInt();
@@ -152,6 +154,25 @@ public class Main {
 
 				clienteDao.deletar(idDeletar);
 				break;
+				
+			case 7:
+				PedidoDao pedidoDao = new PedidoDao();
+				
+				System.out.print("ID do cliente: ");
+				int idCliente = sc.nextInt();
+				sc.nextLine();
+				
+				Cliente clientePedido = clienteDao.consultar(idCliente);
+				
+				if (clientePedido == null) {
+					System.out.println("Cliente não encontrado.");
+					break;
+				}
+				
+				System.out.print("Status do pedido: ");
+				String status = sc.nextLine();
+				
+				
 
 			case 0:
 				System.out.println("Saindo...");
