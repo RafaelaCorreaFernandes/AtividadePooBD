@@ -1,0 +1,42 @@
+create database bd_aula;
+use bd_aula;
+
+create table if not exists tb_produtos(
+id int primary key auto_increment,
+descricao varchar(50),
+preco decimal(6,2)
+);
+
+select * from tb_produtos;
+
+ALTER TABLE tb_produtos ADD COLUMN estoque INT NOT NULL DEFAULT 0;
+
+create table if not exists tb_clientes(
+id int primary key auto_increment,
+cpf varchar(14) not null,
+nome varchar (100) not null,
+email varchar (100),
+rua varchar (100),
+numero varchar (10),
+bairro varchar (60),
+cep varchar (14),
+cidade varchar (60),
+estado varchar(2)
+);
+
+create table tb_pedidos(
+id int primary key auto_increment,
+cliente_id int,
+data date,
+status varchar(30),
+foreign key (cliente_id) references tb_clientes(id)
+);
+
+create table tb_pedidos_produtos (
+pedido_id int,
+produto_id int,
+foreign key (pedido_id) references tb_pedidos(id),
+foreign key (produto_id) references tb_produtos(id)
+);
+
+show tables;
