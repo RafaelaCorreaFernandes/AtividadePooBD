@@ -18,6 +18,7 @@ public class Main {
 		Scanner sc = new Scanner(System.in);
 		ProdutoDao produtoDao = new ProdutoDao();
 		ClienteDao clienteDao = new ClienteDao();
+		PedidoDao pedidoDao = new PedidoDao();
 		int opcao;
 
 		do {
@@ -164,7 +165,6 @@ public class Main {
 				break;
 				
 			case 7: //CARRINHO
-				PedidoDao pedidoDao = new PedidoDao();
 			    Pedido pedido = new Pedido();
 
 			    System.out.print("ID do cliente: ");
@@ -237,6 +237,69 @@ public class Main {
 
 			    } while (opcaoCarrinho != 3);
 
+			    break;
+			    
+			case 8:
+			    System.out.print("Digite o ID do pedido: ");
+			    int idPedido = sc.nextInt();
+			    sc.nextLine();
+
+			    Pedido pedidoConsulta = pedidoDao.consultar(idPedido);
+
+			    if (pedidoConsulta != null) {
+			        System.out.println("ID: " + pedidoConsulta.getId());
+			        System.out.println("Cliente: " + pedidoConsulta.getCliente().getNome());
+			        System.out.println("Data: " + pedidoConsulta.getData());
+			        System.out.println("Status: " + pedidoConsulta.getStatus());
+			    } else {
+			        System.out.println("Pedido não encontrado.");
+			    }
+			    break;
+			    
+			case 9:
+			    List<Pedido> pedidos = pedidoDao.consultar();
+
+			    if (pedidos.isEmpty()) {
+			        System.out.println("Nenhum pedido cadastrado.");
+			    } else {
+			        for (Pedido p : pedidos) {
+			            System.out.println(
+			                p.getId() + " - " +
+			                p.getCliente().getNome() + " - " +
+			                p.getStatus()
+			            );
+			        }
+			    }
+			    break;
+			    
+			case 10:
+			    System.out.print("ID do pedido: ");
+			    int idAlterarPedido = sc.nextInt();
+			    sc.nextLine();
+
+			    Pedido pedidoAlterar = pedidoDao.consultar(idAlterarPedido);
+
+			    if (pedidoAlterar == null) {
+			        System.out.println("Pedido não encontrado.");
+			        break;
+			    }
+
+			    System.out.print("Novo status: ");
+			    pedidoAlterar.setStatus(sc.nextLine());
+
+			    pedidoDao.alterar(pedidoAlterar);
+
+			    System.out.println("Pedido alterado.");
+			    break;
+			    
+			case 11:
+			    System.out.print("ID do pedido: ");
+			    int idExcluir = sc.nextInt();
+			    sc.nextLine();
+
+			    pedidoDao.deletar(idExcluir);
+
+			    System.out.println("Pedido removido.");
 			    break;
 						
 			case 0:
