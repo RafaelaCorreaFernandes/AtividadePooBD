@@ -32,6 +32,10 @@ public class Main {
 			System.out.println("6 - Deletar cliente");
 			System.out.println("--- Pedidos ---");
 			System.out.println("7 - Carrinho / Cadastrar pedido");
+			System.out.println("8 - Consultar pedido por id");
+			System.out.println("9 - Listar pedidos");
+			System.out.println("10 - Alterar pedido");
+			System.out.println("11 - Deletear pedido");
 			System.out.println("0 - Sair");
 			System.out.print("Escolha uma opção: ");
 			opcao = sc.nextInt();
