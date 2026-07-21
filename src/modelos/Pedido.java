@@ -2,6 +2,7 @@ package modelos;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.ArrayList;
 
 public class Pedido {
     private int id;
@@ -11,14 +12,15 @@ public class Pedido {
     private List<Produto> produtos;
 
     public Pedido() {
+    	produtos = new ArrayList<>();
     }
 
     public Pedido(Cliente cliente, LocalDate data,
                   String status, List<Produto> produtos) {
         this.cliente = cliente;
         this.data = data;
-        this.status = status;
-        this.produtos = produtos;
+        this.status = status;             //IF PRODUTOS NOT NULL - USE LISTA PRODUTOS - ELSE - NEW LIST
+        this.produtos = produtos != null ? produtos : new ArrayList<>();
     }
 
     public int getId() {
@@ -60,4 +62,19 @@ public class Pedido {
     public void setProdutos(List<Produto> produtos) {
         this.produtos = produtos;
     }
+    
+    public void adicionarCarrinho(Produto produto) {
+    	if(produtos == null) {
+    		produtos = new ArrayList<>();
+    	}
+    	
+    	produtos.add(produto);
+    }
+    
+    public void removerCarrinho(int  idProduto) {
+    	if (produtos == null) {
+    		produtos.remove(idProduto);
+    }
+    }
+    
 }

@@ -1,10 +1,14 @@
 import java.util.List;
+
 import java.util.Scanner;
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 import dao.ClienteDao;
 import dao.ProdutoDao;
 import modelos.Cliente;
 import modelos.Produto;
+
 import dao.PedidoDao;
 import modelos.Pedido;
 
@@ -27,7 +31,7 @@ public class Main {
 			System.out.println("5 - Alterar cliente");
 			System.out.println("6 - Deletar cliente");
 			System.out.println("--- Pedidos ---");
-			System.out.println("7 - Cadastrar pedido");
+			System.out.println("7 - Carrinho / Cadastrar pedido");
 			System.out.println("0 - Sair");
 			System.out.print("Escolha uma opção: ");
 			opcao = sc.nextInt();
@@ -157,23 +161,75 @@ public class Main {
 				
 			case 7:
 				PedidoDao pedidoDao = new PedidoDao();
-				
-				System.out.print("ID do cliente: ");
-				int idCliente = sc.nextInt();
-				sc.nextLine();
-				
-				Cliente clientePedido = clienteDao.consultar(idCliente);
-				
-				if (clientePedido == null) {
-					System.out.println("Cliente não encontrado.");
-					break;
-				}
-				
-				System.out.print("Status do pedido: ");
-				String status = sc.nextLine();
-				
-				
+			    Pedido pedido = new Pedido();
 
+			    System.out.print("ID do cliente: ");
+			    int idCliente = sc.nextInt();
+			    sc.nextLine();
+
+			    Cliente clientePedido = clienteDao.consultar(idCliente);
+
+			    if (clientePedido == null) {
+			        System.out.println("Cliente não encontrado.");
+			        break;
+			    }
+
+			    pedido.setCliente(clientePedido);
+			    pedido.setData(LocalDate.now());
+
+			    int opcaoCarrinho;
+
+			    do {
+			        System.out.println("\n=== CARRINHO ===");
+			        System.out.println("1 - Adicionar produto");
+			        System.out.println("2 - Remover produto");
+			        System.out.println("3 - Finalizar pedido");
+			        System.out.print("Escolha: ");
+			        opcaoCarrinho = sc.nextInt();
+			        sc.nextLine();
+
+			        switch (opcaoCarrinho) {
+
+			        case 1:
+			            System.out.print("ID do produto: ");
+			            int idAdd = sc.nextInt();
+			            sc.nextLine();
+
+			            Produto produtoAdd = produtoDao.consultar(idAdd);
+
+			            if (produtoAdd != null) {
+			                pedido.adicionarCarrinho(produtoAdd);
+			                System.out.println("Produto adicionado.");
+			            } else {
+			                System.out.println("Produto não encontrado.");
+			            }
+			            break;
+
+			        case 2:
+			            System.out.print("ID do produto: ");
+			            int idRem = sc.nextInt();
+			            sc.nextLine();
+
+			            pedido.removerCarrinho(idRem);
+			            System.out.println("Produto removido.");
+			            break;
+
+			        case 3:
+			            System.out.print("Status do pedido: ");
+			            pedido.setStatus(sc.nextLine());
+
+			            pedidoDao.salvar(pedido);
+			            System.out.println("Pedido cadastrado com sucesso!");
+			            break;
+
+			        default:
+			            System.out.println("Opção inválida.");
+			        }
+
+			    } while (opcaoCarrinho != 3);
+
+			    break;
+						
 			case 0:
 				System.out.println("Saindo...");
 				break;
@@ -186,4 +242,8 @@ public class Main {
 
 		sc.close();
 	}
+	
+
+	
+	
 }
