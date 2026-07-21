@@ -159,7 +159,7 @@ public class Main {
 				clienteDao.deletar(idDeletar);
 				break;
 				
-			case 7:
+			case 7: //CARRINHO
 				PedidoDao pedidoDao = new PedidoDao();
 			    Pedido pedido = new Pedido();
 
@@ -215,12 +215,17 @@ public class Main {
 			            break;
 
 			        case 3:
+			    
 			            System.out.print("Status do pedido: ");
 			            pedido.setStatus(sc.nextLine());
 
-			            pedidoDao.salvar(pedido);
-			            System.out.println("Pedido cadastrado com sucesso!");
+			            if (pedido.finalizarPedido()) {
+			                pedidoDao.salvar(pedido);
+			                System.out.println("Pedido cadastrado com sucesso!");
+			            }
+
 			            break;
+			      
 
 			        default:
 			            System.out.println("Opção inválida.");

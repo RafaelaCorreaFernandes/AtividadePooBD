@@ -77,4 +77,23 @@ public class Pedido {
     }
     }
     
+    public boolean finalizarPedido() {
+
+        if (cliente == null) {
+            System.out.println("Nenhum cliente informado.");
+            return false;
+        }
+
+        if (produtos == null || produtos.isEmpty()) {
+            System.out.println("O carrinho está vazio.");
+            return false;
+        }
+
+        
+        status = "FINALIZADO";
+        return true;
+    }
+
+
+    
 }
